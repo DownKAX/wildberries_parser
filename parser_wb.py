@@ -52,7 +52,7 @@ class SeleniumUtility:
         else:
             level.setdefault(category.get('name'), entity)
 
-    def parse(self, url: str, driver: webdriver, elements_limit: int = 250) -> list:
+    def parse(self, url: str, driver: webdriver, elements_limit: int = 70) -> list:
         """Выполняет парсинг страницы до определённого лимита или прекращения появления новых элементов на странице"""
         driver.get(url)
         WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CLASS_NAME, 'catalog-page__content')))
@@ -124,5 +124,4 @@ class SeleniumUtility:
                 df.to_sql(name=category_name, con=conn)
             except (sqlite3.Error, ValueError) as e:
                 print(e)
-            finally:
-                conn.close()
+        conn.close()
